@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHAAZ Salon - Experience the Art of Beauty</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/examples/js/libs/lil-gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Custom CSS for Three.js and p5.js containers */
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    #services-interactive {
+      width: 100%;
+      height: 300px; /* Adjust as needed */
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+  <header class="relative overflow-hidden h-screen flex items-center justify-center">
+    <div id="hero-canvas"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-pink-900 via-pink-700 to-pink-500 opacity-20"></div>
+    <div class="container mx-auto text-center px-6 z-10">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">SHAAZ Salon</h1>
+      <p class="text-lg md:text-xl text-white opacity-80 mb-8">Where Beauty Meets Innovation</p>
+      <div class="flex justify-center gap-4">
+        <a href="#services" class="bg-pink-400 hover:bg-pink-500 text-white font-semibold py-3 px-6 rounded-full transition duration-300">Explore Services</a>
+        <a href="#book-appointment" class="bg-transparent border-2 border-pink-400 hover:bg-pink-400 hover:text-white text-pink-400 font-semibold py-3 px-6 rounded-full transition duration-300">Book Appointment</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white shadow-md sticky top-0 z-20">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-pink-700">SHAAZ</a>
+      <div class="hidden md:flex space-x-8 text-gray-700 font-semibold">
+        <a href="#home" class="hover:text-pink-500 transition duration-300">Home</a>
+        <a href="#services" class="hover:text-pink-500 transition duration-300">Services</a>
+        <a href="#gallery" class="hover:text-pink-500 transition duration-300">Gallery</a>
+        <a href="#testimonials" class="hover:text-pink-500 transition duration-300">Testimonials</a>
+        <a href="#about" class="hover:text-pink-500 transition duration-300">About Us</a>
+        <a href="#contact" class="hover:text-pink-500 transition duration-300">Contact</a>
+      </div>
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-600 hover:text-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500">
+          <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden bg-white shadow-md py-2">
+      <div class="px-4 py-2 border-b">
+        <a href="#home" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">Home</a>
+      </div>
+      <div class="px-4 py-2 border-b">
+        <a href="#services" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">Services</a>
+      </div>
+      <div class="px-4 py-2 border-b">
+        <a href="#gallery" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">Gallery</a>
+      </div>
+      <div class="px-4 py-2 border-b">
+        <a href="#testimonials" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">Testimonials</a>
+      </div>
+      <div class="px-4 py-2 border-b">
+        <a href="#about" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">About Us</a>
+      </div>
+      <div class="px-4 py-2">
+        <a href="#contact" class="block hover:bg-gray-100 py-2 text-gray-700 font-semibold">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="services" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-pink-700 mb-8">Our Exquisite Services</h2>
+      <p class="text-lg text-gray-700 mb-10">Indulge in a range of personalized beauty treatments designed to enhance your natural radiance.</p>
+
+      <div id="services-interactive" class="mb-8">
+        </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Hair Artistry</h3>
+            <p class="text-gray-700">Precision cuts, vibrant coloring, stunning updos, and nourishing treatments tailored to your hair type and style.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Custom Haircuts</li>
+              <li>Balayage & Highlights</li>
+              <li>Keratin Treatments</li>
+              <li>Styling & Blowouts</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">Learn More</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Skin & Face Therapy</h3>
+            <p class="text-gray-700">Rejuvenating facials, targeted skin treatments, and personalized skincare regimens to achieve a healthy, glowing complexion.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Hydrating Facials</li>
+              <li>Acne Solutions</li>
+              <li>Anti-Aging Treatments</li>
+              <li>Microdermabrasion</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">Learn More</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Bridal & Special Occasions</h3>
+            <p class="text-gray-700">Exquisite bridal makeup, elegant hairstyling, and complete beauty packages to make your special day truly unforgettable.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Bridal Makeup</li>
+              <li>Hairstyling for Events</li>
+              <li>Saree Draping</li>
+              <li>Pre-Wedding Pampering</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">View Packages</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Nail Care & Enhancements</h3>
+            <p class="text-gray-700">Luxurious manicures, pedicures, nail art, and strengthening treatments for perfectly polished hands and feet.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Classic Manicure & Pedicure</li>
+              <li>Gel Polish</li>
+              <li>Nail Extensions</li>
+              <li>Spa Treatments</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">Book Now</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Waxing & Hair Removal</h3>
+            <p class="text-gray-700">Gentle and effective waxing services using high-quality products for smooth and long-lasting results.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Full Body Waxing</li>
+              <li>Facial Waxing</li>
+              <li>Eyebrow Shaping</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">Details</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-pink-600 mb-2">Relaxation & Wellness</h3>
+            <p class="text-gray-700">Soothing massages and holistic treatments to promote relaxation, reduce stress, and enhance your overall well-being.</p>
+            <ul class="list-disc ml-5 mt-3 text-sm text-gray-600">
+              <li>Aromatherapy Massage</li>
+              <li>Deep Tissue Massage</li>
+              <li>Hot Stone Therapy</li>
+            </ul>
+            <button class="mt-4 bg-pink-200 hover:bg-pink-300 text-pink-700 font-semibold py-2 px-4 rounded-full transition duration-300">Explore</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="py-16 bg-white">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-pink-700 mb-8">Our Creative Canvas</h2>
+      <p class="text-lg text-gray-700 mb-10">A glimpse into the artistry and transformations at SHAAZ Salon. (Image placeholders will be here)</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-300">
+            </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-gray-800">Elegant Hairstyle</h4>
+            <p class="text-sm text-gray-600 mt-1">A stunning transformation.</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-300">
+            </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-gray-800">Glowing Facial Result</h4>
+            <p class="text-sm text-gray-600 mt-1">Achieve radiant skin.</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-300">
+            </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-gray-800">Beautiful Bridal Look</h4>
+            <p class="text-sm text-gray-600 mt-1">Making dreams come true.</p>
+          </div>
+        </div>
+        </div>
+      <button class="mt-8 bg-pink-300 hover:bg-pink-400 text-white font-semibold py-3 px-6 rounded-full transition duration-300">View Full Gallery</button>
+    </div>
+  </section>
+
+  <section id="testimonials" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-pink-700 mb-8">What Our Clients Say</h2>
+      <p class="text-lg text-gray-700 mb-10">Read glowing reviews from our satisfied clients who have experienced the SHAAZ difference.</p>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+          <div class="text-xl text-pink-500 mb-2">⭐⭐⭐⭐⭐</div><p class="text-gray-800 italic mb-4">"The best salon experience I've ever had! The staff are incredibly talented and friendly, and I always leave feeling refreshed and beautiful. Their bridal makeup service was exceptional!"</p>
+          <p class="text-sm text-pink-600 font-semibold">- Aisha K.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+          <div class="text-xl text-pink-500 mb-2">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-800 italic mb-4">"I've been a regular at SHAAZ for years, and their consistency in quality and service is remarkable. Whether it's a simple haircut or a detailed facial, they always exceed my expectations."</p>
+          <p class="text-sm text-pink-600 font-semibold">- Rohan M.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <div class="text-xl text-pink-500 mb-2">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-800 italic mb-4">"The atmosphere at SHAAZ is so relaxing, and the attention to detail is amazing. I highly recommend their manicure and pedicure services – truly pampering!"</p>
+          <p class="text-sm text-pink-600 font-semibold">- Sarah L.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="py-16 bg-white">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-pink-700 mb-8">Our Story & Philosophy</h2>
+      <p class="text-lg text-gray-700 mb-6">SHAAZ Salon was founded with a passion for beauty and a commitment to providing exceptional service in a welcoming and inclusive environment. As a female-led business based in the heart of Colombo, we strive to empower our clients to embrace their unique beauty and feel confident in their own skin.</p>
+      <p class="text-lg text-gray-700 mb-8">Our philosophy is centered around personalized care, the use of high-quality, ethical products, and continuous learning to stay at the forefront of beauty trends and techniques. We believe that beauty is not just about appearance, but also about well-being and self-care.</p>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-pink-100 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-pink-700 mb-2">Our Vision</h3>
+          <p class="text-gray-700 text-sm">To be the leading beauty destination in Colombo, recognized for our expertise, innovation, and unwavering commitment to client satisfaction.</p>
+        </div>
+        <div class="bg-pink-100 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-pink-700 mb-2">Our Mission</h3>
+          <p class="text-gray-700 text-sm">To provide personalized and high-quality beauty services that enhance the confidence and well-being of our clients, while fostering a supportive and inspiring work environment.</p>
+        </div>
+        <div class="bg-pink-100 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-pink-700 mb-2">Our Values</h3>
+          <ul class="list-disc ml-5 text-gray-700 text-sm">
+            <li>Excellence in Service</li>
+            <li>Personalized Attention</li>
+            <li>Ethical Practices</li>
+            <li>Continuous Improvement</li>
+            <li>Community Engagement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-pink-700 mb-8">Get in Touch</h2>
+      <p class="text-lg text-gray-700 mb-6">We'd love to hear from you! Book your next appointment or reach out with any inquiries.</p>
+      <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8">
+        <div class="mb-6">
+          <h4 class="text-xl font-semibold text-pink-600 mb-2">Visit Us</h4>
+          <p class="text-gray-700">No. 25, Glamour Street, Colombo 07, Sri Lanka</p>
+        </div>
+        <div class="mb-6">
+          <h4 class="text-xl font-semibold text-pink-600 mb-2">Call Us</h4>
+          <p class="text-gray-700">Phone: <a href="tel:0771234567" class="text-pink-500 hover:underline">077-1234567</a></p>
+        </div>
+        <div class="mb-6">
+          <h4 class="text-xl font-semibold text-pink-600 mb-2">Email Us</h4>
+          <p class="text-gray-700">Email: <a href="mailto:contact@shaazsalon.com" class="text-pink-500 hover:underline">contact@shaazsalon.com</a></p>
+        </div>
+        <div>
+          <h4 class="text-xl font-semibold text-pink-600 mb-2">Opening Hours</h4>
+          <p class="text-gray-700">Tuesday - Sunday: 9:00 AM - 8:00 PM</p>
+          <p class="text-gray-700">Closed on Mondays</p>
+        </div>
+        <div class="mt-8">
+          <h4 class="text-xl font-semibold text-pink-600 mb-2">Book an Appointment</h4>
+          <p class="text-gray-700 text-sm mb-4">For a seamless booking experience, please use our online appointment system (coming soon) or call us directly.</p>
+          <button id="book-appointment" class="bg-pink-400 hover:bg-pink-500 text-white font-semibold py-3 px-6 rounded-full transition duration-300">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-pink-100 text-center py-8 text-pink-700">
+    <div class="container mx-auto px-6">
+      <p class="mb-2">&copy; 2025 SHAAZ Salon. All Rights Reserved.</p>
+      <div class="flex justify-center space-x-4 text-gray-600">
+        <a href="#" class="hover:text-pink-500 transition duration-300">Privacy Policy</a>
+        <a href="#" class="hover:text-pink-500 transition duration-300">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+
+        // Close mobile menu if open after clicking a link
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+
+    // --- Three.js Background Animation (Conceptual) ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xffffff, 0); // Transparent background
+
+    const geometry = new THREE.SphereGeometry(5, 32, 32);
+    const material = new THREE.MeshStandardMaterial({ color: 0xffc0cb, roughness: 0.5, metalness: 0.1 });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    const pointLight = new THREE.PointLight(0xffa0ca, 1);
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambientLight);
+
+    camera.position.z = 10;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      sphere.rotation.x += 0.005;
+      sphere.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(newWidth, newHeight);
+    });
+
+    // --- p5.js Interactive Services Section (Conceptual) ---
+    let p5Instance;
+
+    const sketch = (p) => {
+      let points = [];
+
+      p.setup = () => {
+        const canvas = p.createCanvas(document.getElementById('services-interactive').offsetWidth, 300);
+        canvas.parent('services-interactive');
+        for (let i = 0; i < 50; i++) {
+          points.push(p.createVector(p.random(p.width), p.random(p.height)));
+        }
+        p.noStroke();
+      };
+
+      p.draw = () => {
+        p.background(250);
+        p.fill(255, 192, 203, 150); // Light pink with some transparency
+        for (let point of points) {
+          p.ellipse(point.x, point.y, 10, 10);
+          point.x += p.random(-0.5, 0.5);
+          point.y += p.random(-0.5, 0.5);
+          if (point.x < 0) point.x = p.width;
+          if (point.x > p.width) point.x = 0;
+          if (point.y < 0) point.y = p.height;
+          if (point.y > p.height) point.y = 0;
+        }
+      };
+
+      p.windowResized = () => {
+        p.resizeCanvas(document.getElementById('services-interactive').offsetWidth, 300);
+      };
+    };
+
+    p5Instance = new p5(sketch);
+  </script>
+</body>
+</html>
